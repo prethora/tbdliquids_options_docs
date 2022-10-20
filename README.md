@@ -24,7 +24,6 @@ Options can be defined on three levels:
     - id: usbCCable
     - id: mysteryFlavor
     ```
-    &nbsp;
 
 * **Collection Options**
 
