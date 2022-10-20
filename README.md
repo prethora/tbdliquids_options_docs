@@ -45,7 +45,7 @@ Options can be defined on three levels:
   load: retired-salts
   ```
 
-  Another example is the `Berry Cool` and `Polar Pear` products, which unlike the other `Signature E-Juice` products have an `Add Extra Cool` option and don't have a `+Cool (Menthol)` addon. The `Signature E-Juice` collection configuration defines a variable `withExtraCool` and uses it in a `conditional` field on those options, which is essentially a Javascript function - if it returns `true` the option is included, or ignored otherwise. The `Berry Cool` product options configuration is set to `Overwrite` and looks like this:
+  Another example is the `Berry Cool` and `Polar Pear` products, which unlike the other `Signature E-Juice` products have an `Add Extra Cool` option and don't have a `+Cool (Menthol)` addon. The `Signature E-Juice` collection configuration defines a variable `withExtraCool` and uses it in a `conditional` field on those options, which is linked to that variable. The `Berry Cool` product options configuration is set to `Overwrite` and looks like this:
   
   ```yaml
   inherits: true
