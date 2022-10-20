@@ -99,6 +99,26 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
   You'll notice an ellipsis (...) in front of product IDs (configured placeholders) in the `items` list for options of this type - the ellipsis means "pull all tracked non-custom variants from this product". You'll also notice an `itemCaption` field which is expected to be a Javascript function which given the `variant` object, should return an appropriate caption for the corresponding drop menu item.
 
+  Here is the configuration for the `deal` option of the `Caliburn A2 Replacement Pods` product as an example:
+
+  ```yaml
+    - id: deal
+    type: variant-select
+    caption: --Optional-- Caliburn Optimized Flavor Deal
+    description: Limited one flavor deal per order.
+    items:
+      - ...countryCrumbleSalt
+      - ...freshMintSalt
+      - ...monkeyJuiceSalt
+      - ...sonomaGrapeSalt
+    itemCaption: |
+             ({product,variant}) => {
+                   let ptitle = product.title;
+                   if (ptitle.endsWith(" Salt")) ptitle = ptitle.substring(0,ptitle.length-5);
+                   return `${ptitle} - ${variant.title}`;
+             }
+  ```
+
 * **product-select**  
 
   A drop down menu of products (not variants) either set explicitly, or with a filter. A filter can be a combination of *by collection*, *include if tagged* and/or *exclude if tagged*. A `selectVariant` field is expected to be a Javascript function which given the selected `product` object should return which of its variants should be added to the cart item. This function also has access to the selected item for all other options, so it can use these to decide which variant to select. This is done for the `flavors` option of the `Caliburn A2 Starter Bundle` - the correct variant of the selected `Handcrafted Salt` product is selected based on the `nicotine` option just above.
