@@ -166,7 +166,7 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
   Has a `multiple` field which can be set to `true` - in which case the customer can set the quantity they want of the variant - used for example for the `replacementPods` option for the `Caliburn A2 Device` product.
 
-  You'll notice an ellipsis (...) in front of product IDs (configured placeholders) in the `items` list for options of this type - the ellipsis means "pull all tracked non-custom variants from this product". You'll also notice an `itemCaption` field which is expected to be a Javascript function which given the `variant` object, should return an appropriate caption for the corresponding drop menu item.
+  You'll notice an ellipsis (...) in front of product IDs (configured placeholders) in the `items` list for options of this type - the ellipsis means "pull all tracked non-custom variants from this product". You'll also notice an `itemCaption` field which is expected to be a Javascript function which given the `product` and `variant` objects, should return an appropriate caption for the corresponding drop menu item.
 
   Here is the configuration for the `deal` option of the `Caliburn A2 Replacement Pods` product as an example:
 
