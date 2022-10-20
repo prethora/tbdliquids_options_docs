@@ -307,12 +307,12 @@ This is how the `agentCool` option is configured for the `Handcrafted Salts` col
 
 The link here refers to the `agentCool` product (a placeholder configured in the Global Options), its `size` option which has the `track` field set to `true`, and the `ml15` item variant. Note that the id of this option is also `agentCool` which coincides with the product placeholder, but they have nothing to do with each other, the id here could be something else.
 
-If a product has more than one trackable option, such a `Retired Salts` which are tracked by both their `nicotine` and `size` options, the individual variants can be reference in either of the following ways for example:
+If a product has more than one trackable option, such a `Retired Salts` which are tracked by both their `nicotine` and `size` options, the individual variants can be referenced in either of the following ways for example:
 
 * productName.nicotine.mg15.size.ml60
 * productName.size.ml60.nicotine.mg15
 
-Note that products that have no trackable options simply have a single default variant and can be reference by the product placeholder alone, such as for the `sweetner` option for the `Caliburn A2 Starter Bundle` product:
+Note that products that have no trackable options simply have a single default variant and can be referenced by the product placeholder alone, such as for the `sweetner` option for the `Caliburn A2 Starter Bundle` product:
 
 ```yaml
   - id: sweetener
