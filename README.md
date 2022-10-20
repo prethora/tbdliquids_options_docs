@@ -109,13 +109,56 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
   Can be on or off, used for addons. Has an `included` field which can be set to `true` in which case the checkbox is selected and cannot be unselected - used for the `mysteryFlavor` option on flavor packs and the `usbCCable` option on the `Caliburn A2 Starter Bundle` product.
 
+  Here is the configuration for the `agentCool` option of the `Handcrafted Salts` collection as an example:
+
+  ```yaml
+  - id: agentCool
+    type: checkbox
+    caption: Include Agent Cool? ({{price}})
+    description: Easily add the perfect level of cooling to any flavor
+    link: agentCool.size.ml15
+  ```
+
 * **checkbox-group**
 
   Similar to **checkbox**, but a group of checkboxes - the indivual checkboxes act as individual items of the group option - the exception being that for this option type multiple items can be selected instead of just one.
 
+  Here is the configuration for the `addons` option of the `Signature E-Juice` collection as an example:
+
+  ```yaml
+  - id: addons
+    type: checkbox-group
+    caption: Add-ons
+    items:
+      - id: sweet
+        caption: +Sweet (Sucralose)
+      - id: sour
+        caption: +Sour (Malic)
+      - id: cool
+        caption: +Cool (Menthol)
+        conditional: not withExtraCool
+  ```
+
 * **select**
 
-  A drop down menu, used for example to select the extra flavor level.
+  A drop down menu.
+
+  Here is the configuration for the `extraFlavoring` option of the `Signature E-Juice` collection as an example:
+
+  ```yaml
+  - id: extraFlavoring
+    type: select
+    caption: Add Extra Flavoring
+    items:
+      - id: perc10
+        caption: +10% Flavor
+      - id: perc20
+        caption: +20% Flavor
+      - id: perc30
+        caption: +30% Flavor
+      - id: perc40
+        caption: +40% Flavor
+  ```
 
 * **variant-select**
 
@@ -150,6 +193,37 @@ In the current setup you have standard Shopify options and Bold options as an ad
   A drop down menu of products (not variants) either set explicitly, or with a filter. A filter can be a combination of *by collection*, *include if tagged* and/or *exclude if tagged*. A `selectVariant` field is expected to be a Javascript function which given the selected `product` object should return which of its variants should be added to the cart item. This function also has access to the selected item for all other options, so it can use these to decide which variant to select. This is done for the `flavors` option of the `Caliburn A2 Starter Bundle` - the correct variant of the selected `Handcrafted Salt` product is selected based on the `nicotine` option just above.
 
   Has a `multi-select` field which can be set with a `min` and `max` so the user must select at least `min` number of products and at most `max` number of products. If the `show-all` sub-field is set to `true`, `max` drop down menus will be shown, otherwise only `min` drop down menus will be shown and a new one will appear if necessary whenever all the ones visible have been selected.
+
+  Here is the configuration for the `flavors` option of the `Build-Your-Own Pack` product as an example:
+
+  ```yaml
+  - id: flavors
+    type: product-select
+    filters:
+      - type: collection
+        id: handcrafted-salts
+      #- type: include-if-tagged
+      #  tags: 
+      #    - some-tag
+      #- type: exclude-if-tagged
+      #  tags: 
+      #    - some-tag
+    sort: alpha-asc
+    selectVariant: |
+           ({product,options}) => {
+             return product.nicotine[options.nicotine.itemId];
+           }
+    multiSelect:
+      min: 2
+      max: 6
+      captions:
+        - Flavor 1*
+        - Flavor 2*
+        - Flavor 3
+        - Flavor 4
+        - Flavor 5
+        - Flavor 6
+  ```
 
 ## Pricing
 
