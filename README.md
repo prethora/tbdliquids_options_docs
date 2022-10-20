@@ -6,7 +6,6 @@ Options can be defined on three levels:
 
 * **Global Options**
 
-    &nbsp;
     Accessible from the `Options Editor` menu item of the App: Used to define product aliases, which map placeholders to specific Shopify product IDs for easy and human-readable reference in option configurations. For example:
 
     ```yaml
