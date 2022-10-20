@@ -354,6 +354,57 @@ For an example of an option which has a Javascript function as its `link` field,
        }
 ```
 
+And another good example which returns an array of variants is the `flavorPack` option for the `Essential Salts Pack` product:
+
+```yaml
+- id: flavorPack
+    caption: Flavor Pack
+    items:
+      - id: agentCool
+        caption: AGENT COOL
+      - id: mellowMixers
+        caption: MELLOW MIXERS
+      - id: summerHarvest
+        caption: SUMMER HARVEST
+      - id: sweetTreats
+        caption: SWEET TREATS
+    link: |
+       ({options,option}) => {
+         const packs = {
+           agentCool: [
+             blueRaspberrySalt,
+             cucumberBreezeSalt,
+             issaPearadiseSalt,
+             vanillaMintSalt,
+             theBestDamnMangoSalt
+           ],
+           mellowMixers: [
+             cucumberBreezeSalt,
+             countrySummerSalt,
+             melonSmoothieSalt,
+             monkeyJuiceSalt,
+             sassafrasRootBeerSalt
+           ],
+           summerHarvest: [
+             blueRaspberrySalt,
+             cucumberBreezeSalt,
+             issaPearadiseSalt,
+             lycheeCandySalt,
+             theBestDamnMangoSalt
+           ],
+           sweetTreats: [
+             blueberryMuffinSalt,
+             cerealFiendSalt,
+             melonSmoothieSalt,
+             monkeyJuiceSalt,
+             countryCrumbleSalt           
+           ]
+         };
+         return packs[option.itemId]
+           .map((product) => product.nicotine[options.nicotine.itemId]);
+       }
+```
+
 So basically here, the proper variant from the `caliburnA2Device` product (from the `color` option which is tracked) is returned based on the selection of the color on the bundle.
 
 And finally, a `link` can also be configured directly for the product itself (and not just for its options). For example, for the `White Caliburn A2 Device` the following link is configured:
