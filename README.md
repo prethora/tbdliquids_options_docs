@@ -72,6 +72,6 @@ Now the aforementioned trade off is order editing - you won't be able to do that
 
 Not to worry though, this was not a good solution now either with bold options, because if you had a complicated order, with a whole lot of interconnected line items lying around, and you had to remove a bundle from the order, while there is another pack or something on the order, it could be headache to remove the correct line items. 
 
-So the solution is that when you want to edit the order, you will instead click on "Edit Order" from the "More actions..." menus and it will be managed from a page in the app. This will essentially give you the same view the customer had on their cart, so you can remove items, or adjust down or up the item quantities - and the app would manage everything seamlessly. Problem solved.
+So the solution is that when you want to edit the order, you will instead click on "Edit Order" from the "More actions..." menus and it will be managed from a page in the app. This will essentially give you the same view the customer had on their cart, so you can remove items, or adjust down or up the item quantities from a high-level, not having to worry about low-level line items - and the app would manage everything seamlessly. Problem solved.
 
 
