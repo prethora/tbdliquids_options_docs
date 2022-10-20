@@ -66,7 +66,7 @@ What this means is that all variants that track inventory (well that is, all pro
 
 Since we completely control the visual of how items show from the cart to the notification emails, we can do this. This means we can manage any pricing scheme we want, without having to mess with variants, we can entirely manage sales and deals ourselves without having to mess with scripts and whatnot. Total flexibility.
 
-It also means there is only ever a single $0 variant to represent a physical product/quantity that you want to track - and of course, from whatever product, bundle or pack it is ordered from, there are no duplicate products, it always points to the right variant - thus perfect and accurate inventory tracking. 
+It also means there is only ever a single $0 variant to represent a physical product/quantity that you want to track - and of course, from whatever product, bundle or pack it is ordered from, there are no duplicate products, it always points to the right variant - thus we have perfect and accurate inventory tracking. 
 
 Now the aforementioned trade off is order editing - you won't be able to do that like you do now using the Shopify order editing function. Because obviously, you wouldn't see clearly what the price of each item is, you would just see all zeros and the entirety of the order price in the "Cent" product line item. If you wanted to process a partial refund, you would have to calculate the price to refund yourself, edit the quantity of the "Cent" product to lower the price appropriately and remove the other line items as necessary, for accurate tracking purposes. You'd have to do something similar to increase any line item quantities.
 
