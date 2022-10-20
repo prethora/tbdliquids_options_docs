@@ -26,14 +26,12 @@ Options can be defined on three levels:
 
 * **Collection Options**
 
-    &nbsp;
     Accessible through the `Edit Options` button of a collection in the *Collection Editor*: Actual options are defined here and are simply applied to all products in the collection. Multiple `definitions` can also be defined at this level for collections with products that do not all have the same options profile - this is used in the `Retired Products` collection, which has `Retired Salts` and `Retired E-Juice` products, each requiring their own set of options.
     &nbsp;
 
 
 * **Product Options**
 
-  &nbsp;
   Accessible with the "gear" icon on the right of products in the `Collection Editor`. By default products inherit their options configuration from their collection, but in the *Options Editor* for a specific product, you can select `Overwrite` and include a product specific options configuration. It is also possible to overwrite the collection configuration but also inherit it, by setting...
 
   ```yaml
