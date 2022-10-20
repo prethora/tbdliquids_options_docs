@@ -79,6 +79,30 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
   This looks like the current input for Shopify options, with the first button selected by default. Each item can either have a fixed value, or a custom value with a configurable `caption` and `range`. Only this type of option can be set as *trackable* with the field `track` set to `true`, which automatically generates variants for each combination of trackable choices - more on this below.
 
+  Here is the configuration for the `nicotine` option of the `Handcrafted Salts` collection as an example:
+
+  ```yaml
+  - id: nicotine
+    caption: Nicotine
+    track: true
+    items: 
+      - id: mg15
+        caption: 15MG
+        value: 15
+      - id: mg30
+        caption: 30MG
+        value: 30
+      - id: mg50
+        caption: 50MG
+        value: 50
+      - id: custom
+        caption: CUSTOM
+        value:
+          type: integer
+          caption: Enter Any Value (0-50)
+          range: 0-50
+  ```
+
 * **checkbox**
 
   Can be on or off, used for addons. Has an `included` field which can be set to `true` in which case the checkbox is selected and cannot be unselected - used for the `mysteryFlavor` option on flavor packs and the `usbCCable` option on the `Caliburn A2 Starter Bundle` product.
