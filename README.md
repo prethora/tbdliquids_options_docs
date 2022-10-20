@@ -103,20 +103,20 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
   ```yaml
     - id: deal
-    type: variant-select
-    caption: --Optional-- Caliburn Optimized Flavor Deal
-    description: Limited one flavor deal per order.
-    items:
-      - ...countryCrumbleSalt
-      - ...freshMintSalt
-      - ...monkeyJuiceSalt
-      - ...sonomaGrapeSalt
-    itemCaption: |
-             ({product,variant}) => {
-                   let ptitle = product.title;
-                   if (ptitle.endsWith(" Salt")) ptitle = ptitle.substring(0,ptitle.length-5);
-                   return `${ptitle} - ${variant.title}`;
-             }
+      type: variant-select
+      caption: --Optional-- Caliburn Optimized Flavor Deal
+      description: Limited one flavor deal per order.
+      items:
+        - ...countryCrumbleSalt
+        - ...freshMintSalt
+        - ...monkeyJuiceSalt
+        - ...sonomaGrapeSalt
+      itemCaption: |
+              ({product,variant}) => {
+                    let ptitle = product.title;
+                    if (ptitle.endsWith(" Salt")) ptitle = ptitle.substring(0,ptitle.length-5);
+                    return `${ptitle} - ${variant.title}`;
+              }
   ```
 
 * **product-select**  
