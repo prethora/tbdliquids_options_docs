@@ -80,11 +80,15 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
 * **buttons** (default)
 
-  This looks like the current input for Shopify options, with the first button selected by default. Each item can either have a fixed value, or a custom value with a configurable `caption` and `range`. Only this type of option can be set as *trackable* with the field `track` set to `true` - more on this below.
+  This looks like the current input for Shopify options, with the first button selected by default. Each item can either have a fixed value, or a custom value with a configurable `caption` and `range`. Only this type of option can be set as *trackable* with the field `track` set to `true`, which automatically generates variants for each combination of trackable choices - more on this below.
 
 * **checkbox**
 
   Can be on or off, used for addons. Has an `included` field which can be set to `true` in which case the checkbox is selected and cannot be unselected - used for the `mysteryFlavor` option on flavor packs and the `usbCCable` option on the `Caliburn A2 Starter Bundle` product.
+
+* **checkbox-group**
+
+  Similar to **checkbox**, but a group of checkboxes - the indivual checkboxes act as individual items of the group option - the exception being that for this option type multiple items can be selected instead of just one.
 
 * **select**
 
@@ -104,3 +108,139 @@ In the current setup you have standard Shopify options and Bold options as an ad
 
   Has a `multi-select` field which can be set with a `min` and `max` so the user must select at least `min` number of products and at most `max` number of products. If the `show-all` sub-field is set to `true`, `max` drop down menus will be shown, otherwise only `min` drop down menus will be shown and a new one will appear if necessary whenever all the ones visible have been selected.
 
+## Pricing
+
+Since variants do not have any pricing, the pricing is configured explicitly but separate (yet connected) to the options. Here is an example of how it is configured for the `Signature E-Juice` collection:
+
+```yaml
+price:
+  size:
+    ml30: 14.95
+    ml60: 19.95
+    ml120: 34.95
+  custom: 2
+  extraCool:
+    single: 0.50
+    double: 1
+    triple: 1.50
+  extraFlavoring:
+    perc10: 1.25
+    perc20: 1.75
+    perc30: 2.25
+    perc40: 2.75
+  addons: 
+    sweet: 0.75
+    sour: 0.75
+    cool: 0.75
+```    
+Now if you look at the options configured for the `Signature E-Juice` collection, you'll find that the `id` field for the options and their `items` map to the structure above. So if the `ml60` item is selected for the `size` option, *19.95* will count towards the price of the item. If the `sour` and `cool` addons are checked, then 2x`0.75` will count towards the price of the item, and so on. 
+
+The only value above which doesn't directly map to an option is the `custom` value. This is because it can be "activated" by either of two separate option items: the `custom` item of the `nicotine` option and the `custom` item of the `vg` option. This is NOT done automatically because they have the same name, it has to be explicitly set using the `activatePrice` field on the items. So in this case, the two aforementioned items have the `activatePrice` field set to `custom` (the name used in the price structure). Note that, in this way a price can be activated by multiple items, but is only counted once.
+
+The only time a price can be counted multiple times is for a **variant-select** option with the `multiple` field set to `true`.
+
+This is how the price structure is configured for the `Handcrafted Salts` collection:
+
+```yaml
+price:
+  base: 14.95
+  nicotine:
+    custom: 2
+  agentCool: 7.95
+```
+
+The `base` price if configured always counts towards the item price and doesn't have to be activated by any option.
+
+This is how the price structure is configured for the `Build-Your-Own Pack` product:
+
+```yaml
+price:
+  base: 29.95
+  flavors: |
+        ({option}) => {
+          const table = {
+            3: 13.95,
+            4: 25.90,
+            5: 34.85,
+            6: 40.80,
+          };
+          return table[option.multiSelect.selectedCount] || 0;
+        }  
+  replacementPods: 9.95
+  caliburnA2DeviceKit: 19.95
+  agentCool: 5
+  sweetener: 5
+```
+
+The `flavors` option is a **product-select** option with `min` set to *2* and `max` set to *6*. The `flavors` price value is in this case a Javascript function instead of a constant. Based on the value for `option.multiSelect.selectedCount` it returns the correct price component.
+
+## Linking
+
+Only the **variant-select** and **product-select** option types automatically link to the selected variants - for other option types, where necessary this has to be done explicitly using the `link` field. This can either be a reference to a variant, a list of variant references or a Javascript function that returns a reference to a variant or an array of variant references.
+
+This is how the `agentCool` option is configured for the `Handcrafted Salts` collection.
+
+```yaml
+  - id: agentCool
+    type: checkbox
+    caption: Include Agent Cool? ({{price}})
+    description: Easily add the perfect level of cooling to any flavor
+    link: agentCool.size.ml15
+```
+
+The link here refers to the `agentCool` product (a placeholder configured in the Global Options), its `size` option which has the `track` field set to `true`, and the `ml15` item variant. Note that the id of this option is also `agentCool` which coincides with the product placeholder, but they have nothing to do with each other, the id here could be something else.
+
+If a product has more than one trackable option, such a `Retired Salts` which are tracked by both their `nicotine` and `size` options, the individual variants can be reference in either of the following ways for example:
+
+* productName.nicotine.mg15.size.ml60
+* productName.size.ml60.nicotine.mg15
+
+Note that products that have no trackable options simply have a single default variant and can be reference by the product placeholder alone, such as for the `sweetner` option for the `Caliburn A2 Starter Bundle` product:
+
+```yaml
+  - id: sweetener
+    type: checkbox
+    caption: Add Sweetener?
+    description: Have you ever wished a flavor was sweeter? Now you can control exactly how sweet you prefer your juice to taste. Our sweetener works with any e-liquid.
+    link: sweetener
+```
+
+Note also that for options that are optional, such as **checkbox** and **select**, the link is only activated if a value is selected/checked.
+
+For an example of an option which has a Javascript function as its `link` field, here is the `color` option of the `Caliburn A2 Starter Bundle` product:
+
+```yaml
+  - id: color
+    caption: Color
+    items:
+      - id: specialEditionWhite
+        caption: (SPECIAL EDITION) WHITE
+      - id: aquaBlue
+        caption: AQUA BLUE
+      - id: arcticSilver
+        caption: ARCTIC SILVER
+      - id: black
+        caption: BLACK
+      - id: blue
+        caption: BLUE
+      - id: green
+        caption: GREEN
+      - id: grey
+        caption: GREY
+      - id: irisPurple
+        caption: IRIS PURPLE
+      - id: orange
+        caption: ORANGE
+    link: |
+       ({option}) => {
+         return caliburnA2Device.color[option.itemId];
+       }
+```
+
+So basically here, the proper variant from the `caliburnA2Device` product (from the `color` option which is tracked) is returned based on the selection of the color on the bundle.
+
+And finally, a `link` can also be configured directly for the product itself (and not just for its options). For example, for the `White Caliburn A2 Device` the following link is configured:
+
+```yaml
+link: caliburnA2Device.color.specialEditionWhite
+```
