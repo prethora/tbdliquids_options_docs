@@ -103,6 +103,8 @@ In the current setup you have standard Shopify options and Bold options as an ad
           range: 0-50
   ```
 
+  Note that `type` is not set, and defaults to *buttons*.
+
 * **checkbox**
 
   Can be on or off, used for addons. Has an `included` field which can be set to `true` in which case the checkbox is selected and cannot be unselected - used for the `mysteryFlavor` option on flavor packs and the `usbCCable` option on the `Caliburn A2 Starter Bundle` product.
